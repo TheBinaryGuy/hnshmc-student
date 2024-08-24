@@ -113,18 +113,27 @@ export default function Home() {
                         <Text className='w-1/2 py-2 text-muted-foreground'>
                             {student.FullName ?? '-'}
                         </Text>
-                        <Text className='w-1/2 py-2 text-foreground'>Mobile No</Text>
+
+                        <Text className='w-1/2 py-2 text-foreground'>Mobile</Text>
                         <Text className='w-1/2 py-2 text-muted-foreground'>
                             {student.MobileNo ?? '-'}
                         </Text>
+
                         <Text className='w-1/2 py-2 text-foreground'>Email</Text>
                         <Text className='w-1/2 py-2 text-muted-foreground'>
                             {student.Email ?? '-'}
                         </Text>
+
                         <Text className='w-1/2 py-2 text-foreground'>Address</Text>
                         <Text className='w-1/2 py-2 text-muted-foreground'>
                             {student.Address ?? '-'}
                         </Text>
+
+                        <Text className='w-1/2 py-2 text-foreground'>GRN Number</Text>
+                        <Text className='w-1/2 py-2 text-muted-foreground'>
+                            {student.GRNNo ?? '-'}
+                        </Text>
+
                         <Text className='w-1/2 py-2 text-foreground'>Enrollment Year</Text>
                         <Text className='w-1/2 py-2 text-muted-foreground'>
                             {student.EnrollmenyYear ?? '-'}

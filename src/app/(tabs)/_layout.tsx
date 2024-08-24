@@ -57,6 +57,16 @@ export default function TabLayout() {
                 headerTitleStyle: {
                     color: colorScheme === 'dark' ? 'hsl(220 16% 99%)' : 'hsl(220 67% 0%)',
                 },
+                tabBarStyle: {
+                    backgroundColor:
+                        colorScheme === 'dark' ? 'hsl(220 43% 4%)' : 'hsl(220 44% 100%)',
+                },
+                tabBarLabelStyle: {
+                    color: colorScheme === 'dark' ? 'hsl(220 16% 99%)' : 'hsl(220 67% 0%)',
+                },
+                tabBarIconStyle: {
+                    color: colorScheme === 'dark' ? 'hsl(220 16% 99%)' : 'hsl(220 67% 0%)',
+                },
             }}>
             <Tabs.Screen
                 name='index'

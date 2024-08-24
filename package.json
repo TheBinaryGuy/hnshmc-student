@@ -24,6 +24,7 @@
         "@tanstack/react-query-persist-client": "^5.52.1",
         "@types/js-cookie": "^3.0.6",
         "clsx": "^2.1.1",
+        "date-fns": "^3.6.0",
         "expo": "~51.0.31",
         "expo-constants": "~16.0.2",
         "expo-dev-client": "~4.0.25",
@@ -59,7 +60,7 @@
         "prettier": "^3.3.3",
         "prettier-plugin-tailwindcss": "^0.6.6",
         "react-test-renderer": "18.2.0",
-        "typescript": "~5.3.3"
+        "typescript": "~5.5.4"
     },
     "private": true,
     "packageManager": "pnpm@9.8.0+sha512.8e4c3550fb500e808dbc30bb0ce4dd1eb614e30b1c55245f211591ec2cdf9c611cabd34e1364b42f564bd54b3945ed0f49d61d1bbf2ec9bd74b866fcdc723276"
