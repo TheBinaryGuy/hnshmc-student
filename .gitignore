@@ -25,3 +25,6 @@ android
 ios
 
 .vscode
+
+*.aab
+*.apk
