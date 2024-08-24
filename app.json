@@ -36,12 +36,12 @@
         "owner": "thebinaryguy",
         "runtimeVersion": {
             "policy": "appVersion"
-        },
-        "updates": {
-            "url": "https://u.expo.dev/1ebea4be-c0f8-4700-87d4-1bf016d81723",
-            "requestHeaders": {
-                "expo-channel-name": "main"
-            }
         }
+        // "updates": {
+        //     "url": "https://u.expo.dev/1ebea4be-c0f8-4700-87d4-1bf016d81723",
+        //     "requestHeaders": {
+        //         "expo-channel-name": "main"
+        //     }
+        // }
     }
 }
