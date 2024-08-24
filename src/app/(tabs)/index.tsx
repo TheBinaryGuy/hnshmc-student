@@ -142,7 +142,7 @@ export default function Home() {
                 </View>
 
                 <View className='flex-1 gap-4'>
-                    <Text className='text-center text-2xl text-foreground'>Pass / Studying</Text>
+                    <Text className='text-center text-2xl text-foreground'>Passed / Studying</Text>
                     <Timeline
                         data={[
                             {
