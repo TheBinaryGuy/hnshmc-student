@@ -70,7 +70,7 @@ export default function Home() {
                 throw new Error('Error fetching data');
             }
 
-            const newSession = response.headers.get('auth_session');
+            const newSession = response.headers.get('sessionid');
             if (newSession !== null && newSession !== undefined && newSession !== '') {
                 signIn(newSession);
             }
@@ -110,13 +110,25 @@ export default function Home() {
                     <Text className='text-center text-2xl text-foreground'>Personal Details</Text>
                     <View className='flex-row flex-wrap rounded-lg bg-muted p-4 shadow-sm'>
                         <Text className='w-1/2 py-2 text-foreground'>Name</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>{student.FullName}</Text>
+                        <Text className='w-1/2 py-2 text-muted-foreground'>
+                            {student.FullName ?? '-'}
+                        </Text>
                         <Text className='w-1/2 py-2 text-foreground'>Mobile No</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>{student.MobileNo}</Text>
+                        <Text className='w-1/2 py-2 text-muted-foreground'>
+                            {student.MobileNo ?? '-'}
+                        </Text>
                         <Text className='w-1/2 py-2 text-foreground'>Email</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>{student.Email}</Text>
+                        <Text className='w-1/2 py-2 text-muted-foreground'>
+                            {student.Email ?? '-'}
+                        </Text>
                         <Text className='w-1/2 py-2 text-foreground'>Address</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>{student.Address}</Text>
+                        <Text className='w-1/2 py-2 text-muted-foreground'>
+                            {student.Address ?? '-'}
+                        </Text>
+                        <Text className='w-1/2 py-2 text-foreground'>Enrollment Year</Text>
+                        <Text className='w-1/2 py-2 text-muted-foreground'>
+                            {student.EnrollmenyYear ?? '-'}
+                        </Text>
                     </View>
                 </View>
 
@@ -185,8 +197,8 @@ function TimelineItem({
             <View className='mr-4 items-center'>
                 <View
                     className={cn('z-10 h-4 w-4 rounded-full', {
-                        'bg-green-500': item.passYear === 1,
-                        'bg-amber-500': item.passYear === 2,
+                        'bg-amber-500': item.passYear === 1,
+                        'bg-green-500': item.passYear === 2,
                     })}
                 />
                 {!isLast && <View className='-mt-2 w-0.5 flex-1 bg-muted-foreground' />}

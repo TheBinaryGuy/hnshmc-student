@@ -62,7 +62,11 @@ export default function Verify() {
                 }),
             });
 
-            const session = response.headers.get('auth_session');
+            const session = response.headers.get('sessionid');
+            console.log(response.ok);
+            console.log(response.status);
+            console.log(response.statusText);
+            console.log(session);
             if (!response.ok || !session) {
                 ToastAndroid.show('Failed to sign in', ToastAndroid.SHORT);
                 return;
