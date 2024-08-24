@@ -16,14 +16,6 @@ export default function SignIn() {
             return;
         }
 
-        if (email.toLowerCase() === 'admin@hnshmc.org') {
-            signIn('admin');
-            if (router.canDismiss()) {
-                router.dismissAll();
-            }
-            return router.replace('/');
-        }
-
         setLoading(true);
         try {
             const response = await fetch(getBaseUrl() + '/api/auth/send-code', {
@@ -37,22 +29,27 @@ export default function SignIn() {
             });
 
             if (response.ok) {
-                return router.push({
-                    pathname: '/sign-in/verify/[email]',
-                    params: {
-                        email,
-                    },
-                });
+                const session = response.headers.get('sessionid');
+                if (!session) {
+                    ToastAndroid.show('Failed to sign in', ToastAndroid.SHORT);
+                    return;
+                }
+
+                signIn(session);
+                if (router.canDismiss()) {
+                    router.dismissAll();
+                }
+                return router.replace('/');
             }
 
             if (response.status === 404) {
                 ToastAndroid.show('Email not found', ToastAndroid.SHORT);
                 return;
             } else {
-                ToastAndroid.show('Failed to send code', ToastAndroid.SHORT);
+                ToastAndroid.show('Failed to sign in', ToastAndroid.SHORT);
             }
         } catch {
-            ToastAndroid.show('Failed to send code', ToastAndroid.SHORT);
+            ToastAndroid.show('Failed to sign in', ToastAndroid.SHORT);
         } finally {
             setLoading(false);
         }
