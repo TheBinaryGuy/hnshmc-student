@@ -49,7 +49,7 @@ const passYearToText = {
     2: 'Passed',
 } as Record<number, string>;
 
-export default function Dashboard() {
+export default function Home() {
     const notifyOnChangeProps = useFocusNotifyOnChangeProps();
     const queryFocusAware = useQueryFocusAware();
     const { session, signIn } = useSession();

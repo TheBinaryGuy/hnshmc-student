@@ -29,6 +29,9 @@
             "eas": {
                 "projectId": "1ebea4be-c0f8-4700-87d4-1bf016d81723"
             }
+            // "updates": {
+            //     "assetPatternsToBeBundled": ["src/assets/images/**/*.png"]
+            // }
         },
         "owner": "thebinaryguy",
         "runtimeVersion": {
