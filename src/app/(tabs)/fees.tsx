@@ -2,11 +2,9 @@ import { Text, View } from 'react-native';
 
 export default function Fees() {
     return (
-        <View>
-            <View className='flex flex-row gap-2'>
-                <Text className='text-xl text-foreground'>Fees</Text>
-            </View>
-            <Text className='text-foreground'>Work in Progress.</Text>
+        <View className='mx-4 mt-8 flex-1 gap-8'>
+            <Text className='text-xl text-foreground'>Fees</Text>
+            <Text className='text-foreground'>Work in Progress 🚧</Text>
         </View>
     );
 }
