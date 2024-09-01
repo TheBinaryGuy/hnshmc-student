@@ -2,6 +2,7 @@ import { useSession } from '@/src/components/session-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
+import { useStorageState } from '@/src/hooks/useStorageState';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { useMutation } from '@tanstack/react-query';
@@ -24,6 +25,8 @@ export function CustomAvatar({
     onSuccess: () => void;
 }) {
     const { session } = useSession();
+    const [[isLoading, version], setVersion] = useStorageState('profile-image-version');
+
     const { mutate: setProfileImage, isPending } = useMutation({
         mutationKey: ['profile', session],
         mutationFn: async () => {
@@ -71,6 +74,8 @@ export function CustomAvatar({
             }
         },
         onSuccess: async () => {
+            setVersion(Date.now().toString());
+
             await fetch(getBaseUrl() + '/api/manage/profile/complete-upload', {
                 method: 'POST',
                 headers: {
@@ -105,7 +110,7 @@ export function CustomAvatar({
         },
     });
 
-    if (isPending) {
+    if (isPending || isLoading) {
         return (
             <View className='flex-1 items-center gap-4'>
                 <View className='size-24 items-center justify-center rounded-full bg-primary'>
@@ -147,7 +152,7 @@ export function CustomAvatar({
                     <Avatar alt={`${name}'s Avatar`} className='size-24'>
                         <AvatarImage
                             source={{
-                                uri: `${profileImage}?${Date.now()}`,
+                                uri: `${profileImage}?${version}`,
                                 height: 96,
                                 width: 96,
                             }}

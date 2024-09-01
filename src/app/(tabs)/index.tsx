@@ -1,6 +1,7 @@
 import { CustomAvatar } from '@/src/components/custom-avatar';
 import { useSession } from '@/src/components/session-provider';
 import { Spinner } from '@/src/components/spinner';
+import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/card';
 import { Text } from '@/src/components/ui/text';
 import { useFocusNotifyOnChangeProps } from '@/src/hooks/useFocusNotifyOnChangeProps';
 import { useQueryFocusAware } from '@/src/hooks/useQueryFocusAware';
@@ -70,84 +71,96 @@ export default function Home() {
                     profileImage={student.ProfileImage}
                 />
 
-                <View className='gap-4'>
-                    <Text className='text-center text-2xl text-foreground'>Personal Details</Text>
-                    <View className='flex-row flex-wrap rounded-lg bg-muted p-4 shadow-sm'>
-                        <Text className='w-1/2 py-2 text-foreground'>Name</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>
-                            {student.FullName ?? '-'}
-                        </Text>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Personal Details</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <View className='gap-2'>
+                            <View>
+                                <Text className='font-semibold'>Name</Text>
+                                <Text>{student.FullName ?? '-'}</Text>
+                            </View>
 
-                        <Text className='w-1/2 py-2 text-foreground'>Mobile</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>
-                            {student.MobileNo ?? '-'}
-                        </Text>
+                            <View>
+                                <Text className='font-semibold'>Mobile</Text>
+                                <Text>{student.MobileNo ?? '-'}</Text>
+                            </View>
 
-                        <Text className='w-1/2 py-2 text-foreground'>Email</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>
-                            {student.Email ?? '-'}
-                        </Text>
+                            <View>
+                                <Text className='font-semibold'>Email</Text>
+                                <Text>{student.Email ?? '-'}</Text>
+                            </View>
 
-                        <Text className='w-1/2 py-2 text-foreground'>Address</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>
-                            {student.Address ?? '-'}
-                        </Text>
+                            <View>
+                                <Text className='font-semibold'>Address</Text>
+                                <Text>{student.Address ?? '-'}</Text>
+                            </View>
 
-                        <Text className='w-1/2 py-2 text-foreground'>GRN Number</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>
-                            {student.GRNNo ?? '-'}
-                        </Text>
+                            <View>
+                                <Text className='font-semibold'>GRN Number</Text>
+                                <Text>{student.GRNNo ?? '-'}</Text>
+                            </View>
 
-                        <Text className='w-1/2 py-2 text-foreground'>Enrollment Year</Text>
-                        <Text className='w-1/2 py-2 text-muted-foreground'>
-                            {student.EnrollmenyYear ?? '-'}
-                        </Text>
-                    </View>
-                </View>
+                            <View>
+                                <Text className='font-semibold'>Enrollment Year</Text>
+                                <Text>{student.EnrollmenyYear ?? '-'}</Text>
+                            </View>
+                        </View>
+                    </CardContent>
+                </Card>
 
-                <View className='flex-1 gap-4'>
-                    <Text className='text-center text-2xl text-foreground'>Passed / Studying</Text>
-                    <Timeline
-                        data={[
-                            {
-                                id: 1,
-                                year: 'Year 1',
-                                title:
-                                    student.PassYear1 !== null && student.PassYear1 !== undefined
-                                        ? (passYearToText[student.PassYear1] ?? 'Not Available')
-                                        : 'Not Available',
-                                passYear: student.PassYear1,
-                            },
-                            {
-                                id: 2,
-                                year: 'Year 2',
-                                title:
-                                    student.PassYear2 !== null && student.PassYear2 !== undefined
-                                        ? (passYearToText[student.PassYear2] ?? 'Not Available')
-                                        : 'Not Available',
-                                passYear: student.PassYear2,
-                            },
-                            {
-                                id: 3,
-                                year: 'Year 3',
-                                title:
-                                    student.PassYear3 !== null && student.PassYear3 !== undefined
-                                        ? (passYearToText[student.PassYear3] ?? 'Not Available')
-                                        : 'Not Available',
-                                passYear: student.PassYear3,
-                            },
-                            {
-                                id: 4,
-                                year: 'Year 4',
-                                title:
-                                    student.PassYear4 !== null && student.PassYear4 !== undefined
-                                        ? (passYearToText[student.PassYear4] ?? 'Not Available')
-                                        : 'Not Available',
-                                passYear: student.PassYear4,
-                            },
-                        ]}
-                    />
-                </View>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Passed / Studying</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Timeline
+                            data={[
+                                {
+                                    id: 1,
+                                    year: 'Year 1',
+                                    title:
+                                        student.PassYear1 !== null &&
+                                        student.PassYear1 !== undefined
+                                            ? (passYearToText[student.PassYear1] ?? 'Not Available')
+                                            : 'Not Available',
+                                    passYear: student.PassYear1,
+                                },
+                                {
+                                    id: 2,
+                                    year: 'Year 2',
+                                    title:
+                                        student.PassYear2 !== null &&
+                                        student.PassYear2 !== undefined
+                                            ? (passYearToText[student.PassYear2] ?? 'Not Available')
+                                            : 'Not Available',
+                                    passYear: student.PassYear2,
+                                },
+                                {
+                                    id: 3,
+                                    year: 'Year 3',
+                                    title:
+                                        student.PassYear3 !== null &&
+                                        student.PassYear3 !== undefined
+                                            ? (passYearToText[student.PassYear3] ?? 'Not Available')
+                                            : 'Not Available',
+                                    passYear: student.PassYear3,
+                                },
+                                {
+                                    id: 4,
+                                    year: 'Year 4',
+                                    title:
+                                        student.PassYear4 !== null &&
+                                        student.PassYear4 !== undefined
+                                            ? (passYearToText[student.PassYear4] ?? 'Not Available')
+                                            : 'Not Available',
+                                    passYear: student.PassYear4,
+                                },
+                            ]}
+                        />
+                    </CardContent>
+                </Card>
             </View>
         </ScrollView>
     );
@@ -196,7 +209,11 @@ function Timeline({
         passYear: number | null;
     }[];
 }) {
-    const items = data.filter(item => item.passYear !== null && item.passYear !== undefined);
+    const items = data
+        .sort((a, b) => {
+            return b.id - a.id;
+        })
+        .filter(item => item.passYear !== null && item.passYear !== undefined);
     return (
         <View className='flex-1 p-4'>
             {items.map((item, index) => (
