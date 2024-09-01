@@ -24,7 +24,5 @@ expo-env.d.ts
 android
 ios
 
-.vscode
-
 *.aab
 *.apk

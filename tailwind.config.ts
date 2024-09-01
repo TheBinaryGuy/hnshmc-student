@@ -1,4 +1,7 @@
 import type { Config } from 'tailwindcss';
+import animate from 'tailwindcss-animate';
+
+const { hairlineWidth } = require('nativewind/theme');
 
 export default {
     darkMode: 'class',
@@ -53,6 +56,9 @@ export default {
                 md: 'calc(var(--radius) - 2px)',
                 sm: 'calc(var(--radius) - 4px)',
             },
+            borderWidth: {
+                hairline: hairlineWidth(),
+            },
             keyframes: {
                 'accordion-down': {
                     from: { height: '0' },
@@ -74,5 +80,5 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [animate],
 } satisfies Config;

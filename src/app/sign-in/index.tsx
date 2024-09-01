@@ -1,9 +1,10 @@
 import { useSession } from '@/src/components/SessionProvider';
+import { Text } from '@/src/components/ui/text';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Text, TextInput, ToastAndroid, View } from 'react-native';
+import { TextInput, ToastAndroid, View } from 'react-native';
 
 export default function SignIn() {
     const { signIn } = useSession();
@@ -76,7 +77,7 @@ export default function SignIn() {
                         keyboardType='email-address'
                         textContentType='emailAddress'
                         placeholder='Your Email'
-                        className='rounded bg-muted px-2 py-2 text-foreground shadow placeholder:text-muted-foreground'
+                        className='rounded bg-muted p-2 text-foreground shadow placeholder:text-muted-foreground'
                     />
                     <Text
                         className='rounded bg-primary p-2 text-center font-semibold text-primary-foreground shadow disabled:bg-primary/50 disabled:text-primary-foreground/50'

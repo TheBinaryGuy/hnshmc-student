@@ -1,9 +1,10 @@
 import { useSession } from '@/src/components/SessionProvider';
+import { Text } from '@/src/components/ui/text';
 import { cn, getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { Redirect, router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
+import { StyleSheet, TextInput, ToastAndroid, View } from 'react-native';
 import {
     CodeField,
     Cursor,
@@ -115,7 +116,7 @@ export default function Verify() {
                             <Text
                                 key={index}
                                 className={cn(
-                                    'h-10 w-10 rounded border-2 border-foreground/30 bg-background text-center text-2xl leading-10 text-foreground',
+                                    'size-10 rounded border-2 border-foreground/30 bg-background text-center text-2xl leading-10 text-foreground',
                                     {
                                         'border-foreground': isFocused,
                                     }

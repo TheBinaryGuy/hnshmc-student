@@ -1,4 +1,5 @@
 import { useSession } from '@/src/components/SessionProvider';
+import { Text } from '@/src/components/ui/text';
 import { useFocusNotifyOnChangeProps } from '@/src/hooks/useFocusNotifyOnChangeProps';
 import { useQueryFocusAware } from '@/src/hooks/useQueryFocusAware';
 import { useRefreshOnFocus } from '@/src/hooks/useRefreshOnFocus';
@@ -6,7 +7,7 @@ import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 type StudentFees = {
     TermFee: number | null;
@@ -24,9 +25,9 @@ type StudentFees = {
 
 export default function Fees() {
     const notifyOnChangeProps = useFocusNotifyOnChangeProps();
-    const queryFocusAware = useQueryFocusAware();
+    const queryFocusAware = useQueryFocusAware(notifyOnChangeProps);
     const { session, signIn } = useSession();
-    const { data, isLoading, refetch } = useQuery<StudentFees>({
+    const { data, isLoading, refetch } = useQuery<unknown, Error, StudentFees>({
         queryKey: ['fees', session],
         queryFn: async () => {
             const response = await fetch(getBaseUrl() + '/api/manage/fees', {

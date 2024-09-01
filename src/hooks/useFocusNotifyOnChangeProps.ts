@@ -1,4 +1,4 @@
-import { NotifyOnChangeProps } from '@tanstack/query-core';
+import type { NotifyOnChangeProps } from '@tanstack/query-core';
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useRef } from 'react';
 

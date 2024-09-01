@@ -11,10 +11,15 @@ export function getCookies(cookieStr: string) {
         .map(str => str.trim().split(/=(.+)/))
         .reduce(
             (acc, curr) => {
-                acc[curr[0]] = curr[1];
+                const key = curr[0];
+                if (!key) {
+                    return acc;
+                }
+
+                acc[key] = curr[1];
                 return acc;
             },
-            {} as Record<string, string>
+            {} as Record<string, string | undefined>
         );
 }
 

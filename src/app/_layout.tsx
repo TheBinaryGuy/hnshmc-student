@@ -1,16 +1,26 @@
 import { SessionProvider } from '@/src/components/SessionProvider';
+import { setAndroidNavigationBar } from '@/src/lib/android-navigation-bar';
+import { NAV_THEME } from '@/src/lib/constants';
+import { useColorScheme } from '@/src/lib/useColorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { ThemeProvider } from '@react-navigation/native';
+import { PortalHost } from '@rn-primitives/portal';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { QueryClient, focusManager, onlineManager } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { Stack } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import * as SystemUI from 'expo-system-ui';
 import { useEffect } from 'react';
 import type { AppStateStatus } from 'react-native';
-import { AppState, useColorScheme } from 'react-native';
+import { AppState } from 'react-native';
 
 import '@/src/global.css';
+
+export { ErrorBoundary } from 'expo-router';
+
+SplashScreen.preventAutoHideAsync();
 
 onlineManager.setEventListener(setOnline => {
     return NetInfo.addEventListener(state => {
@@ -37,7 +47,19 @@ const asyncStoragePersister = createAsyncStoragePersister({
 });
 
 export default function RootLayout() {
-    const colorScheme = useColorScheme();
+    const { colorScheme, isDarkColorScheme } = useColorScheme();
+
+    useEffect(() => {
+        setAndroidNavigationBar(colorScheme).finally(() => SplashScreen.hideAsync());
+        (async () => {
+            await SystemUI.setBackgroundColorAsync(
+                colorScheme === 'dark'
+                    ? NAV_THEME.dark.colors.background
+                    : NAV_THEME.light.colors.background
+            );
+            await setAndroidNavigationBar(colorScheme);
+        })().finally(() => SplashScreen.hideAsync());
+    }, [colorScheme]);
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', onAppStateChange);
@@ -48,21 +70,10 @@ export default function RootLayout() {
         <PersistQueryClientProvider
             client={queryClient}
             persistOptions={{ persister: asyncStoragePersister }}>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <ThemeProvider value={isDarkColorScheme ? NAV_THEME.dark : NAV_THEME.light}>
+                <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
                 <SessionProvider>
-                    <Stack
-                        screenOptions={{
-                            headerStyle: {
-                                backgroundColor:
-                                    colorScheme === 'dark'
-                                        ? 'hsl(220 43% 4%)'
-                                        : 'hsl(220 44% 100%)',
-                            },
-                            headerTitleStyle: {
-                                color:
-                                    colorScheme === 'dark' ? 'hsl(220 16% 99%)' : 'hsl(220 67% 0%)',
-                            },
-                        }}>
+                    <Stack>
                         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
 
                         <Stack.Screen name='+not-found' />
@@ -81,6 +92,7 @@ export default function RootLayout() {
                             }}
                         />
                     </Stack>
+                    <PortalHost />
                 </SessionProvider>
             </ThemeProvider>
         </PersistQueryClientProvider>

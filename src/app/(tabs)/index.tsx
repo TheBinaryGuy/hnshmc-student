@@ -1,13 +1,15 @@
+import { CustomAvatar } from '@/src/components/custom-avatar';
 import { useSession } from '@/src/components/SessionProvider';
+import { Text } from '@/src/components/ui/text';
 import { useFocusNotifyOnChangeProps } from '@/src/hooks/useFocusNotifyOnChangeProps';
 import { useQueryFocusAware } from '@/src/hooks/useQueryFocusAware';
 import { useRefreshOnFocus } from '@/src/hooks/useRefreshOnFocus';
 import { cn, getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
-type tblStudent = {
+type Student = {
     StudentIDP: number;
     FullName: string | null;
     MobileNo: string | null;
@@ -50,14 +52,15 @@ const passYearToText = {
 } as Record<number, string>;
 
 export default function Home() {
-    const notifyOnChangeProps = useFocusNotifyOnChangeProps();
-    const queryFocusAware = useQueryFocusAware();
     const { session, signIn } = useSession();
+
+    const notifyOnChangeProps = useFocusNotifyOnChangeProps();
+    const queryFocusAware = useQueryFocusAware(notifyOnChangeProps);
     const {
         data: student,
         isLoading,
         refetch,
-    } = useQuery<tblStudent>({
+    } = useQuery<unknown, Error, Student>({
         queryKey: ['profile', session],
         queryFn: async () => {
             const response = await fetch(getBaseUrl() + '/api/manage/profile', {
@@ -80,7 +83,6 @@ export default function Home() {
         notifyOnChangeProps,
         enabled: queryFocusAware,
     });
-
     useRefreshOnFocus(refetch);
 
     if (isLoading) {
@@ -106,6 +108,12 @@ export default function Home() {
     return (
         <ScrollView className='flex-1 bg-background text-foreground'>
             <View className='mx-4 mt-8 flex-1 gap-8'>
+                <CustomAvatar
+                    onSuccess={refetch}
+                    name={student.FullName}
+                    profileImage={student.ProfileImage}
+                />
+
                 <View className='gap-4'>
                     <Text className='text-center text-2xl text-foreground'>Personal Details</Text>
                     <View className='flex-row flex-wrap rounded-lg bg-muted p-4 shadow-sm'>
@@ -150,7 +158,7 @@ export default function Home() {
                                 year: 'Year 1',
                                 title:
                                     student.PassYear1 !== null && student.PassYear1 !== undefined
-                                        ? passYearToText[student.PassYear1]
+                                        ? (passYearToText[student.PassYear1] ?? 'Not Available')
                                         : 'Not Available',
                                 passYear: student.PassYear1,
                             },
@@ -159,7 +167,7 @@ export default function Home() {
                                 year: 'Year 2',
                                 title:
                                     student.PassYear2 !== null && student.PassYear2 !== undefined
-                                        ? passYearToText[student.PassYear2]
+                                        ? (passYearToText[student.PassYear2] ?? 'Not Available')
                                         : 'Not Available',
                                 passYear: student.PassYear2,
                             },
@@ -168,7 +176,7 @@ export default function Home() {
                                 year: 'Year 3',
                                 title:
                                     student.PassYear3 !== null && student.PassYear3 !== undefined
-                                        ? passYearToText[student.PassYear3]
+                                        ? (passYearToText[student.PassYear3] ?? 'Not Available')
                                         : 'Not Available',
                                 passYear: student.PassYear3,
                             },
@@ -177,7 +185,7 @@ export default function Home() {
                                 year: 'Year 4',
                                 title:
                                     student.PassYear4 !== null && student.PassYear4 !== undefined
-                                        ? passYearToText[student.PassYear4]
+                                        ? (passYearToText[student.PassYear4] ?? 'Not Available')
                                         : 'Not Available',
                                 passYear: student.PassYear4,
                             },
@@ -205,7 +213,7 @@ function TimelineItem({
         <View className='flex-row'>
             <View className='mr-4 items-center'>
                 <View
-                    className={cn('z-10 h-4 w-4 rounded-full', {
+                    className={cn('z-10 size-4 rounded-full', {
                         'bg-amber-500': item.passYear === 1,
                         'bg-green-500': item.passYear === 2,
                     })}
