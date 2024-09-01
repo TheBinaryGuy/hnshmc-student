@@ -1,12 +1,13 @@
 import { useSession } from '@/src/components/SessionProvider';
 import { Button } from '@/src/components/ui/button';
+import { Input } from '@/src/components/ui/input';
 import { Text } from '@/src/components/ui/text';
 import { useNavThemeColors } from '@/src/lib/constants';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { TextInput, ToastAndroid, View } from 'react-native';
+import { ToastAndroid, View } from 'react-native';
 
 export default function SignIn() {
     const { signIn } = useSession();
@@ -70,18 +71,17 @@ export default function SignIn() {
                     Let's get started!
                 </Text>
                 <View className='gap-4'>
-                    <TextInput
-                        onSubmitEditing={sendCode}
+                    <Input
+                        autoComplete='email'
+                        keyboardType='email-address'
+                        textContentType='emailAddress'
+                        placeholder='Your Email'
                         value={email}
                         onChangeText={e => {
                             if (loading) return;
                             setEmail(e);
                         }}
-                        autoComplete='email'
-                        keyboardType='email-address'
-                        textContentType='emailAddress'
-                        placeholder='Your Email'
-                        className='rounded bg-muted p-2 text-foreground shadow placeholder:text-muted-foreground'
+                        aria-labelledby='email'
                     />
                     <Button size='sm' disabled={loading} onPress={sendCode}>
                         <Text>{loading ? 'Please Wait' : 'Next'}</Text>

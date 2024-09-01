@@ -111,48 +111,52 @@ function StudentFeesCard({ data }: { data: StudentFees }) {
                     <View className='gap-4 py-4'>
                         <Text className='font-semibold text-foreground'>Receipt Details:</Text>
                         <View className='rounded-md bg-background'>
-                            {data.Fees.sort((a, b) => b.FeesIDP - a.FeesIDP).map(fee => (
-                                <View key={fee.FeesIDP} className='border-b border-border p-4'>
-                                    <View className='mb-2 flex-row items-center justify-between'>
-                                        <Text className='font-medium text-foreground'>
-                                            Term: {fee.TermID}
-                                        </Text>
-                                        <View
-                                            className={`rounded px-2 py-1 ${fee.ReceiptDate ? 'bg-green-500' : 'bg-red-500'}`}>
-                                            <Text className='text-xs text-foreground'>
-                                                {fee.ReceiptDate ? 'Paid' : 'Pending'}
+                            {data.Fees.sort((a, b) => b.FeesIDP - a.FeesIDP).map(fee => {
+                                return (
+                                    <View key={fee.FeesIDP} className='border-b border-border p-4'>
+                                        <View className='mb-2 flex-row items-center justify-between'>
+                                            <Text className='font-medium text-foreground'>
+                                                Term: {fee.TermID}
+                                            </Text>
+                                            <View
+                                                className={`rounded px-2 py-1 ${fee.ReceiptDate ? 'bg-green-500' : 'bg-red-500'}`}>
+                                                <Text className='text-xs text-foreground'>
+                                                    {fee.ReceiptDate ? 'Paid' : 'Pending'}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View className='gap-1'>
+                                            <Text className='text-sm text-muted-foreground'>
+                                                <Text className='font-medium text-foreground'>
+                                                    Date:
+                                                </Text>{' '}
+                                                {formatDate(fee.ReceiptDate)}
+                                            </Text>
+                                            <Text className='text-sm text-muted-foreground'>
+                                                <Text className='font-medium text-foreground'>
+                                                    Amount:
+                                                </Text>{' '}
+                                                <Text
+                                                    className={
+                                                        fee.ReceiptDate
+                                                            ? 'font-bold text-green-500'
+                                                            : 'text-red-500'
+                                                    }>
+                                                    {formatINR(fee.ReceiptAmount)}
+                                                </Text>
+                                            </Text>
+                                            <Text className='text-sm text-muted-foreground'>
+                                                <Text className='font-medium text-foreground'>
+                                                    Remarks:
+                                                </Text>{' '}
+                                                <Text className='italic'>
+                                                    {fee.Remarks ?? 'N/A'}
+                                                </Text>
                                             </Text>
                                         </View>
                                     </View>
-                                    <View className='gap-1'>
-                                        <Text className='text-sm text-muted-foreground'>
-                                            <Text className='font-medium text-foreground'>
-                                                Date:
-                                            </Text>{' '}
-                                            {formatDate(fee.ReceiptDate)}
-                                        </Text>
-                                        <Text className='text-sm text-muted-foreground'>
-                                            <Text className='font-medium text-foreground'>
-                                                Amount:
-                                            </Text>{' '}
-                                            <Text
-                                                className={
-                                                    fee.ReceiptDate
-                                                        ? 'font-bold text-green-500'
-                                                        : 'text-red-500'
-                                                }>
-                                                {formatINR(fee.ReceiptAmount)}
-                                            </Text>
-                                        </Text>
-                                        <Text className='text-sm text-muted-foreground'>
-                                            <Text className='font-medium text-foreground'>
-                                                Remarks:
-                                            </Text>{' '}
-                                            <Text className='italic'>{fee.Remarks ?? 'N/A'}</Text>
-                                        </Text>
-                                    </View>
-                                </View>
-                            ))}
+                                );
+                            })}
                         </View>
                     </View>
                 </View>
