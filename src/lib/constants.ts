@@ -1,3 +1,4 @@
+import { useColorScheme } from '@/src/lib/useColorScheme';
 import type { Theme } from '@react-navigation/native';
 
 export const NAV_THEME: Record<'dark' | 'light', Theme> = {
@@ -24,3 +25,8 @@ export const NAV_THEME: Record<'dark' | 'light', Theme> = {
         },
     },
 };
+
+export function useNavThemeColors() {
+    const { colorScheme } = useColorScheme();
+    return NAV_THEME[colorScheme].colors;
+}

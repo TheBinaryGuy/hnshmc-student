@@ -1,5 +1,7 @@
 import { useSession } from '@/src/components/SessionProvider';
+import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
+import { useNavThemeColors } from '@/src/lib/constants';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -56,12 +58,14 @@ export default function SignIn() {
         }
     }, [email, signIn]);
 
+    const colors = useNavThemeColors();
+
     return (
         <View className='flex flex-col bg-background'>
             <View className='mx-4 mt-8 flex flex-col gap-2'>
-                <Text className='text-center text-primary'>
-                    <AntDesign name='user' size={48} />
-                </Text>
+                <View className='mx-auto size-24 items-center justify-center'>
+                    <AntDesign name='user' size={48} color={colors.primary} />
+                </View>
                 <Text className='my-4 text-center text-3xl font-semibold text-foreground'>
                     Let's get started!
                 </Text>
@@ -79,12 +83,9 @@ export default function SignIn() {
                         placeholder='Your Email'
                         className='rounded bg-muted p-2 text-foreground shadow placeholder:text-muted-foreground'
                     />
-                    <Text
-                        className='rounded bg-primary p-2 text-center font-semibold text-primary-foreground shadow disabled:bg-primary/50 disabled:text-primary-foreground/50'
-                        disabled={loading}
-                        onPress={sendCode}>
-                        {loading ? 'Please Wait' : 'Next'}
-                    </Text>
+                    <Button size='sm' disabled={loading} onPress={sendCode}>
+                        <Text>{loading ? 'Please Wait' : 'Next'}</Text>
+                    </Button>
                 </View>
             </View>
         </View>

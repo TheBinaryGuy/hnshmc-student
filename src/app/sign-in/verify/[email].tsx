@@ -1,5 +1,7 @@
 import { useSession } from '@/src/components/SessionProvider';
+import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
+import { useNavThemeColors } from '@/src/lib/constants';
 import { cn, getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { Redirect, router, useLocalSearchParams } from 'expo-router';
@@ -81,6 +83,8 @@ export default function Verify() {
         }
     }, [code, email, signIn]);
 
+    const colors = useNavThemeColors();
+
     if (!email || email === '[email]') {
         return <Redirect href='/sign-in' />;
     }
@@ -88,9 +92,9 @@ export default function Verify() {
     return (
         <View className='flex flex-col bg-background'>
             <View className='mx-4 mt-8 flex flex-col gap-2'>
-                <Text className='text-center text-primary'>
-                    <AntDesign name='Safety' size={48} />
-                </Text>
+                <View className='mx-auto size-24 items-center justify-center'>
+                    <AntDesign name='Safety' size={48} color={colors.primary} />
+                </View>
                 <Text className='my-4 text-center text-3xl font-semibold text-foreground'>
                     Verification
                 </Text>
@@ -126,12 +130,9 @@ export default function Verify() {
                             </Text>
                         )}
                     />
-                    <Text
-                        className='rounded bg-primary p-2 text-center font-semibold text-primary-foreground shadow disabled:bg-primary/50 disabled:text-primary-foreground/50'
-                        disabled={loading}
-                        onPress={verifyCode}>
+                    <Button size='sm' disabled={loading} onPress={verifyCode}>
                         {loading ? 'Please Wait' : 'Sign In'}
-                    </Text>
+                    </Button>
                 </View>
             </View>
         </View>

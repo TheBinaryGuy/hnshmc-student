@@ -74,11 +74,11 @@ export default function Fees() {
     }
 
     return (
-        <View className='flex-1 bg-background px-4 py-8'>
-            <ScrollView className='flex-1'>
+        <ScrollView className='flex-1'>
+            <View className='flex-1 bg-background px-4 py-8'>
                 <StudentFeesCard data={data} />
-            </ScrollView>
-        </View>
+            </View>
+        </ScrollView>
     );
 }
 
