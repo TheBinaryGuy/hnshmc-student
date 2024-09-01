@@ -1,5 +1,6 @@
 import { useSession } from '@/src/components/SessionProvider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
+import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
@@ -106,57 +107,59 @@ export function CustomAvatar({
 
     if (isPending) {
         return (
-            <View className='size-24 items-center'>
-                <View className='size-full animate-spin'>
-                    <Text className='p-4'>
-                        <AntDesign
-                            name='loading1'
-                            size={84}
-                            style={{
-                                borderRadius: 100,
-                            }}
-                        />
-                    </Text>
+            <View className='flex-1 items-center gap-4'>
+                <View className='size-24 items-center justify-center rounded-full bg-primary'>
+                    <View className='animate-spin'>
+                        <AntDesign color='white' name='loading1' size={48} />
+                    </View>
                 </View>
+
+                <Button disabled={isPending} size='sm' variant='link'>
+                    <Text>Change Image</Text>
+                </Button>
             </View>
         );
     }
 
     const isDefaultAvatar = profileImage === null;
     const defaultAvatar = (
-        <View className='size-24 rounded-full bg-primary'>
-            <Text className='p-4'>
-                <AntDesign
-                    name='user'
-                    size={84}
-                    style={{
-                        borderRadius: 100,
-                    }}
-                />
-            </Text>
+        <View className='size-24 rounded-full bg-primary p-2'>
+            <AntDesign
+                color='white'
+                name='user'
+                size={72}
+                style={{
+                    borderRadius: 100,
+                }}
+            />
         </View>
     );
 
     return (
-        <Pressable
-            onPress={() => setProfileImage()}
-            disabled={isPending}
-            className='size-24 items-center'>
-            {isDefaultAvatar ? (
-                defaultAvatar
-            ) : (
-                <Avatar alt={`${name}'s Avatar`} className='size-full'>
-                    <AvatarImage
-                        source={{
-                            uri: profileImage! + '?' + new Date(),
-                            height: 96,
-                            width: 96,
-                        }}
-                        className='size-full rounded-full object-cover'
-                    />
-                    <AvatarFallback>{defaultAvatar}</AvatarFallback>
-                </Avatar>
-            )}
-        </Pressable>
+        <View className='flex-1 items-center gap-4'>
+            <Pressable
+                onPress={() => setProfileImage()}
+                disabled={isPending}
+                className='flex-1 items-center'>
+                {isDefaultAvatar ? (
+                    defaultAvatar
+                ) : (
+                    <Avatar alt={`${name}'s Avatar`} className='size-24'>
+                        <AvatarImage
+                            source={{
+                                uri: `${profileImage}?${Date.now()}`,
+                                height: 96,
+                                width: 96,
+                            }}
+                            className='size-full rounded-full object-cover'
+                        />
+                        <AvatarFallback>{defaultAvatar}</AvatarFallback>
+                    </Avatar>
+                )}
+            </Pressable>
+            <Button onPress={() => setProfileImage()} disabled={isPending} size='sm' variant='link'>
+                <Text>Change Image</Text>
+            </Button>
+        </View>
     );
 }
