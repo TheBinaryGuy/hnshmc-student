@@ -59,11 +59,13 @@ CardContent.displayName = 'CardContent';
 
 const CardFooter = React.forwardRef<ViewRef, React.ComponentPropsWithoutRef<typeof View>>(
     ({ className, ...props }, ref) => (
-        <View
-            ref={ref}
-            className={cn('flex flex-row items-center p-6 pt-0', className)}
-            {...props}
-        />
+        <TextClassContext.Provider value='text-card-foreground'>
+            <View
+                ref={ref}
+                className={cn('flex flex-row items-center p-6 pt-0', className)}
+                {...props}
+            />
+        </TextClassContext.Provider>
     )
 );
 CardFooter.displayName = 'CardFooter';

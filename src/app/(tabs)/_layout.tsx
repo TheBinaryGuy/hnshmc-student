@@ -1,11 +1,11 @@
-import { useSession } from '@/src/components/SessionProvider';
-import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
+import { TabBarIcon } from '@/src/components/navigation/tab-bar-icon';
+import { useSession } from '@/src/components/session-provider';
+import { Spinner } from '@/src/components/spinner';
 import { Text } from '@/src/components/ui/text';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
-import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
@@ -13,15 +13,7 @@ export default function TabLayout() {
     const { bottom } = useSafeAreaInsets();
 
     if (isLoading) {
-        return (
-            <View className='flex h-full flex-col items-center justify-center'>
-                <View className='animate-spin'>
-                    <Text className='text-primary'>
-                        <AntDesign name='loading1' size={24} />
-                    </Text>
-                </View>
-            </View>
-        );
+        return <Spinner />;
     }
 
     if (session === null) {

@@ -1,4 +1,4 @@
-import { useSession } from '@/src/components/SessionProvider';
+import { useSession } from '@/src/components/session-provider';
 import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
 import { useNavThemeColors } from '@/src/lib/constants';

@@ -1,50 +1,14 @@
 import { CustomAvatar } from '@/src/components/custom-avatar';
-import { useSession } from '@/src/components/SessionProvider';
+import { useSession } from '@/src/components/session-provider';
+import { Spinner } from '@/src/components/spinner';
 import { Text } from '@/src/components/ui/text';
 import { useFocusNotifyOnChangeProps } from '@/src/hooks/useFocusNotifyOnChangeProps';
 import { useQueryFocusAware } from '@/src/hooks/useQueryFocusAware';
 import { useRefreshOnFocus } from '@/src/hooks/useRefreshOnFocus';
+import type { Student } from '@/src/lib/types';
 import { cn, getBaseUrl } from '@/src/lib/utils';
-import { AntDesign } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollView, View } from 'react-native';
-
-type Student = {
-    StudentIDP: number;
-    FullName: string | null;
-    MobileNo: string | null;
-    Email: string | null;
-    GenderID: number | null;
-    Address: string | null;
-    FatherMobileNo: string | null;
-    CuurentYearID: number | null;
-    GRNNo: string | null;
-    AadharNumber: number | null;
-    PANNo: string | null;
-    ScholarshipAmount: number | null;
-    EnrollmenyYear: string | null;
-    FeesTypeID: number | null;
-    BatchID: number | null;
-    Remark1: string | null;
-    Remark2: string | null;
-    Remark3: string | null;
-    Password: string | null;
-    OTP: string | null;
-    TermFee: number | null;
-    TotalFee: number | null;
-    DepositRefundable: number | null;
-    DepositReceived: number | null;
-    ImportRefID: number | null;
-    ProfileImage: string | null;
-    PassYear1: number | null;
-    PassYear2: number | null;
-    PassYear3: number | null;
-    PassYear4: number | null;
-    IsActive: boolean;
-    IsDelete: boolean | null;
-    EntryBy: number;
-    EntryDate: Date;
-};
 
 const passYearToText = {
     1: 'Studying',
@@ -86,15 +50,7 @@ export default function Home() {
     useRefreshOnFocus(refetch);
 
     if (isLoading) {
-        return (
-            <View className='flex h-full flex-col items-center justify-center'>
-                <View className='animate-spin'>
-                    <Text className='text-primary'>
-                        <AntDesign name='loading1' size={24} />
-                    </Text>
-                </View>
-            </View>
-        );
+        return <Spinner />;
     }
 
     if (student === undefined) {
@@ -230,7 +186,7 @@ function TimelineItem({
     );
 }
 
-const Timeline = ({
+function Timeline({
     data,
 }: {
     data: {
@@ -239,7 +195,7 @@ const Timeline = ({
         title: string;
         passYear: number | null;
     }[];
-}) => {
+}) {
     const items = data.filter(item => item.passYear !== null && item.passYear !== undefined);
     return (
         <View className='flex-1 p-4'>
@@ -248,4 +204,4 @@ const Timeline = ({
             ))}
         </View>
     );
-};
+}

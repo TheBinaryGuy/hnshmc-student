@@ -1,4 +1,4 @@
-import { SessionProvider } from '@/src/components/SessionProvider';
+import { SessionProvider } from '@/src/components/session-provider';
 import { setAndroidNavigationBar } from '@/src/lib/android-navigation-bar';
 import { NAV_THEME } from '@/src/lib/constants';
 import { useColorScheme } from '@/src/lib/useColorScheme';

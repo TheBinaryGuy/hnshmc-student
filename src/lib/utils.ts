@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
+import { format } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -26,4 +27,16 @@ export function getCookies(cookieStr: string) {
 export function getBaseUrl() {
     const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? 'https://hnshmc-web.vercel.app';
     return apiUrl;
+}
+
+export function formatINR(amount: number | null) {
+    if (amount === null) return 'N/A';
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
+}
+
+export function formatDate(date: Date | null) {
+    if (date !== null) {
+        return format(date, 'dd MMM yyyy');
+    }
+    return 'N/A';
 }
