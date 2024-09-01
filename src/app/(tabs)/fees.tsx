@@ -53,12 +53,7 @@ export default function Fees() {
         );
     }
 
-    const totalPaid = data.Fees.reduce((acc, fee) => {
-        if (fee.ReceiptDate) {
-            return acc + (fee.ReceiptAmount ?? 0);
-        }
-        return acc;
-    }, 0);
+    const totalPaid = data.Fees.reduce((acc, fee) => acc + Number(fee.ReceiptAmount ?? 0), 0);
 
     return (
         <ScrollView className='flex-1'>
@@ -85,7 +80,7 @@ export default function Fees() {
                             <View className='flex-row justify-between'>
                                 <Text className='text-red-500'>Total Remaining</Text>
                                 <Text className='font-semibold text-red-500'>
-                                    {formatINR((data.TotalFee ?? 0) - totalPaid)}
+                                    {formatINR(Number(data.TotalFee ?? 0) - Number(totalPaid))}
                                 </Text>
                             </View>
                         </View>
@@ -93,7 +88,7 @@ export default function Fees() {
                 </View>
                 <View className='gap-4'>
                     <Text className='text-center text-2xl'>Receipt Details</Text>
-                    <View>
+                    <View className='gap-4'>
                         {data.Fees.sort((a, b) => b.FeesIDP - a.FeesIDP).map(fee => (
                             <Card key={fee.FeesIDP}>
                                 <CardHeader className='gap-2'>
