@@ -95,13 +95,11 @@ export default function Verify() {
                 <View className='mx-auto size-24 items-center justify-center'>
                     <AntDesign name='Safety' size={48} color={colors.primary} />
                 </View>
-                <Text className='my-4 text-center text-3xl font-semibold text-foreground'>
-                    Verification
-                </Text>
-                <Text className='text-center text-foreground'>
+                <Text className='my-4 text-center text-3xl font-semibold'>Verification</Text>
+                <Text className='text-center'>
                     Please enter the code that was just sent to your email:
                 </Text>
-                <Text className='text-center text-foreground'>{email}</Text>
+                <Text className='text-center'>{email}</Text>
                 <View className='gap-4'>
                     <CodeField
                         ref={ref}
@@ -120,7 +118,7 @@ export default function Verify() {
                             <Text
                                 key={index}
                                 className={cn(
-                                    'size-10 rounded border-2 border-foreground/30 bg-background text-center text-2xl leading-10 text-foreground',
+                                    'size-10 rounded border-2 border-foreground/30 bg-background text-center text-2xl leading-10',
                                     {
                                         'border-foreground': isFocused,
                                     }

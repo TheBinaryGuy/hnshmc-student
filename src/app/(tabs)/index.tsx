@@ -57,13 +57,13 @@ export default function Home() {
     if (student === undefined) {
         return (
             <View className='flex-1 flex-col items-center justify-center'>
-                <Text className='text-foreground'>No data</Text>
+                <Text>No data</Text>
             </View>
         );
     }
 
     return (
-        <ScrollView className='flex-1 bg-background text-foreground'>
+        <ScrollView className='flex-1'>
             <View className='mx-4 mt-8 flex-1 gap-8'>
                 <CustomAvatar
                     onSuccess={refetch}
@@ -192,7 +192,7 @@ function TimelineItem({
             <View className='flex-1 pb-6'>
                 <Text className='mb-2 text-muted-foreground'>{item.year}</Text>
                 <View className='rounded-lg bg-muted p-4 shadow-sm'>
-                    <Text className='text-lg font-semibold text-foreground'>{item.title}</Text>
+                    <Text className='text-lg font-semibold'>{item.title}</Text>
                 </View>
             </View>
         </View>

@@ -91,7 +91,7 @@ export default function Fees() {
                     <View className='gap-4'>
                         {data.Fees.sort((a, b) => b.FeesIDP - a.FeesIDP).map(fee => (
                             <Card key={fee.FeesIDP}>
-                                <CardHeader className='gap-2'>
+                                <CardHeader className='pb-2'>
                                     <CardTitle>Term {fee.TermID}</CardTitle>
                                 </CardHeader>
                                 <CardContent>

@@ -67,9 +67,7 @@ export default function SignIn() {
                 <View className='mx-auto size-24 items-center justify-center'>
                     <AntDesign name='user' size={48} color={colors.primary} />
                 </View>
-                <Text className='my-4 text-center text-3xl font-semibold text-foreground'>
-                    Let's get started!
-                </Text>
+                <Text className='my-4 text-center text-3xl font-semibold'>Let's get started!</Text>
                 <View className='gap-4'>
                     <Input
                         autoComplete='email'

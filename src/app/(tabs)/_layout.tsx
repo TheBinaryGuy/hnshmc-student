@@ -1,6 +1,7 @@
 import { TabBarIcon } from '@/src/components/navigation/tab-bar-icon';
 import { useSession } from '@/src/components/session-provider';
 import { Spinner } from '@/src/components/spinner';
+import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
@@ -28,7 +29,8 @@ export default function TabLayout() {
             screenOptions={{
                 headerRight() {
                     return (
-                        <Text
+                        <Button
+                            variant='ghost'
                             onPress={() => {
                                 fetch(getBaseUrl() + '/api/auth/logout', {
                                     headers: {
@@ -37,10 +39,11 @@ export default function TabLayout() {
                                     // eslint-disable-next-line no-console
                                 }).catch(console.error);
                                 signOut();
-                            }}
-                            className='mr-4 mt-2 rounded bg-transparent p-2 active:bg-background/50 active:text-foreground/50'>
-                            <AntDesign size={20} name='logout' />
-                        </Text>
+                            }}>
+                            <Text>
+                                <AntDesign size={20} name='logout' />
+                            </Text>
+                        </Button>
                     );
                 },
             }}>
