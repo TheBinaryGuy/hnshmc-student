@@ -8,6 +8,7 @@ import { useQueryFocusAware } from '@/src/hooks/useQueryFocusAware';
 import { useRefreshOnFocus } from '@/src/hooks/useRefreshOnFocus';
 import type { Student } from '@/src/lib/types';
 import { cn, getBaseUrl } from '@/src/lib/utils';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollView, View } from 'react-native';
 
@@ -63,106 +64,112 @@ export default function Home() {
     }
 
     return (
-        <ScrollView className='flex-1'>
-            <View className='mx-4 mt-8 flex-1 gap-8'>
-                <CustomAvatar
-                    onSuccess={refetch}
-                    name={student.FullName}
-                    profileImage={student.ProfileImage}
-                />
+        <BottomSheetModalProvider>
+            <ScrollView className='flex-1'>
+                <View className='mx-4 mt-8 flex-1 gap-8'>
+                    <CustomAvatar
+                        onSuccess={refetch}
+                        name={student.FullName}
+                        profileImage={student.ProfileImage}
+                    />
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Personal Details</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <View className='gap-2'>
-                            <View>
-                                <Text className='font-semibold'>Name</Text>
-                                <Text>{student.FullName ?? '-'}</Text>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Personal Details</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <View className='gap-2'>
+                                <View>
+                                    <Text className='font-semibold'>Name</Text>
+                                    <Text>{student.FullName ?? '-'}</Text>
+                                </View>
+
+                                <View>
+                                    <Text className='font-semibold'>Mobile</Text>
+                                    <Text>{student.MobileNo ?? '-'}</Text>
+                                </View>
+
+                                <View>
+                                    <Text className='font-semibold'>Email</Text>
+                                    <Text>{student.Email ?? '-'}</Text>
+                                </View>
+
+                                <View>
+                                    <Text className='font-semibold'>Address</Text>
+                                    <Text>{student.Address ?? '-'}</Text>
+                                </View>
+
+                                <View>
+                                    <Text className='font-semibold'>GRN Number</Text>
+                                    <Text>{student.GRNNo ?? '-'}</Text>
+                                </View>
+
+                                <View>
+                                    <Text className='font-semibold'>Enrollment Year</Text>
+                                    <Text>{student.EnrollmenyYear ?? '-'}</Text>
+                                </View>
                             </View>
+                        </CardContent>
+                    </Card>
 
-                            <View>
-                                <Text className='font-semibold'>Mobile</Text>
-                                <Text>{student.MobileNo ?? '-'}</Text>
-                            </View>
-
-                            <View>
-                                <Text className='font-semibold'>Email</Text>
-                                <Text>{student.Email ?? '-'}</Text>
-                            </View>
-
-                            <View>
-                                <Text className='font-semibold'>Address</Text>
-                                <Text>{student.Address ?? '-'}</Text>
-                            </View>
-
-                            <View>
-                                <Text className='font-semibold'>GRN Number</Text>
-                                <Text>{student.GRNNo ?? '-'}</Text>
-                            </View>
-
-                            <View>
-                                <Text className='font-semibold'>Enrollment Year</Text>
-                                <Text>{student.EnrollmenyYear ?? '-'}</Text>
-                            </View>
-                        </View>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Passed / Studying</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <Timeline
-                            data={[
-                                {
-                                    id: 1,
-                                    year: 'Year 1',
-                                    title:
-                                        student.PassYear1 !== null &&
-                                        student.PassYear1 !== undefined
-                                            ? (passYearToText[student.PassYear1] ?? 'Not Available')
-                                            : 'Not Available',
-                                    passYear: student.PassYear1,
-                                },
-                                {
-                                    id: 2,
-                                    year: 'Year 2',
-                                    title:
-                                        student.PassYear2 !== null &&
-                                        student.PassYear2 !== undefined
-                                            ? (passYearToText[student.PassYear2] ?? 'Not Available')
-                                            : 'Not Available',
-                                    passYear: student.PassYear2,
-                                },
-                                {
-                                    id: 3,
-                                    year: 'Year 3',
-                                    title:
-                                        student.PassYear3 !== null &&
-                                        student.PassYear3 !== undefined
-                                            ? (passYearToText[student.PassYear3] ?? 'Not Available')
-                                            : 'Not Available',
-                                    passYear: student.PassYear3,
-                                },
-                                {
-                                    id: 4,
-                                    year: 'Year 4',
-                                    title:
-                                        student.PassYear4 !== null &&
-                                        student.PassYear4 !== undefined
-                                            ? (passYearToText[student.PassYear4] ?? 'Not Available')
-                                            : 'Not Available',
-                                    passYear: student.PassYear4,
-                                },
-                            ]}
-                        />
-                    </CardContent>
-                </Card>
-            </View>
-        </ScrollView>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Passed / Studying</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <Timeline
+                                data={[
+                                    {
+                                        id: 1,
+                                        year: 'Year 1',
+                                        title:
+                                            student.PassYear1 !== null &&
+                                            student.PassYear1 !== undefined
+                                                ? (passYearToText[student.PassYear1] ??
+                                                  'Not Available')
+                                                : 'Not Available',
+                                        passYear: student.PassYear1,
+                                    },
+                                    {
+                                        id: 2,
+                                        year: 'Year 2',
+                                        title:
+                                            student.PassYear2 !== null &&
+                                            student.PassYear2 !== undefined
+                                                ? (passYearToText[student.PassYear2] ??
+                                                  'Not Available')
+                                                : 'Not Available',
+                                        passYear: student.PassYear2,
+                                    },
+                                    {
+                                        id: 3,
+                                        year: 'Year 3',
+                                        title:
+                                            student.PassYear3 !== null &&
+                                            student.PassYear3 !== undefined
+                                                ? (passYearToText[student.PassYear3] ??
+                                                  'Not Available')
+                                                : 'Not Available',
+                                        passYear: student.PassYear3,
+                                    },
+                                    {
+                                        id: 4,
+                                        year: 'Year 4',
+                                        title:
+                                            student.PassYear4 !== null &&
+                                            student.PassYear4 !== undefined
+                                                ? (passYearToText[student.PassYear4] ??
+                                                  'Not Available')
+                                                : 'Not Available',
+                                        passYear: student.PassYear4,
+                                    },
+                                ]}
+                            />
+                        </CardContent>
+                    </Card>
+                </View>
+            </ScrollView>
+        </BottomSheetModalProvider>
     );
 }
 

@@ -17,6 +17,7 @@ import type { AppStateStatus } from 'react-native';
 import { AppState } from 'react-native';
 
 import '@/src/global.css';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -73,26 +74,28 @@ export default function RootLayout() {
             <ThemeProvider value={isDarkColorScheme ? NAV_THEME.dark : NAV_THEME.light}>
                 <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
                 <SessionProvider>
-                    <Stack>
-                        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+                    <GestureHandlerRootView style={{ flex: 1 }}>
+                        <Stack>
+                            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
 
-                        <Stack.Screen name='+not-found' />
+                            <Stack.Screen name='+not-found' />
 
-                        <Stack.Screen
-                            name='sign-in/index'
-                            options={{
-                                headerTitle: 'Sign In',
-                            }}
-                        />
+                            <Stack.Screen
+                                name='sign-in/index'
+                                options={{
+                                    headerTitle: 'Sign In',
+                                }}
+                            />
 
-                        <Stack.Screen
-                            name='sign-in/verify/[email]'
-                            options={{
-                                headerTitle: 'Verify',
-                            }}
-                        />
-                    </Stack>
-                    <PortalHost />
+                            <Stack.Screen
+                                name='sign-in/verify/[email]'
+                                options={{
+                                    headerTitle: 'Verify',
+                                }}
+                            />
+                        </Stack>
+                        <PortalHost />
+                    </GestureHandlerRootView>
                 </SessionProvider>
             </ThemeProvider>
         </PersistQueryClientProvider>
