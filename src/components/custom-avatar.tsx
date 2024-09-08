@@ -32,6 +32,8 @@ export function CustomAvatar({
     const { mutate: setProfileImage, isPending } = useMutation({
         mutationKey: ['profile', session],
         mutationFn: async () => {
+            bottomSheetModalRef.current?.close();
+
             const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                 allowsEditing: true,
@@ -42,8 +44,6 @@ export function CustomAvatar({
             if (result.canceled || result.assets.length <= 0) {
                 throw new Error('Canceled');
             }
-
-            bottomSheetModalRef.current?.close();
 
             const image = result.assets.at(0)!;
             const response = await fetch(getBaseUrl() + '/api/manage/profile/start-upload', {
@@ -119,16 +119,9 @@ export function CustomAvatar({
                 throw new Error('Error clearing image');
             }
         },
-        onSuccess: async () => {
-            onSuccess();
-        },
-        onError: async error => {
-            if (error.message === 'Canceled') {
-                ToastAndroid.show('Upload canceled', ToastAndroid.SHORT);
-                return;
-            }
-
-            ToastAndroid.show('Error uploading image', ToastAndroid.SHORT);
+        onSuccess,
+        onError: () => {
+            ToastAndroid.show('Error clearing image', ToastAndroid.SHORT);
         },
     });
 
@@ -145,7 +138,7 @@ export function CustomAvatar({
                 </View>
 
                 <Button disabled={isPending} size='sm' variant='link'>
-                    <Text>Change Image</Text>
+                    <Text>Manage Image</Text>
                 </Button>
             </View>
         );
@@ -210,11 +203,11 @@ export function CustomAvatar({
                 }}>
                 <BottomSheetView className='gap-2 p-4'>
                     <Button onPress={() => setProfileImage()} disabled={isPending || clearPending}>
-                        <Text>Choose Image</Text>
+                        <Text>Update Image</Text>
                     </Button>
                     <Button
                         onPress={() => clearProfilePicture()}
-                        disabled={isPending || clearPending}
+                        disabled={isPending || clearPending || isDefaultAvatar}
                         variant='destructive'>
                         <Text>Delete Image</Text>
                     </Button>
