@@ -2,7 +2,6 @@ import { useSession } from '@/src/components/session-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
-import { useStorageState } from '@/src/hooks/useStorageState';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -27,7 +26,6 @@ export function CustomAvatar({
     onSuccess: () => void;
 }) {
     const { session } = useSession();
-    const [[isLoading, version], setVersion] = useStorageState('profile-image-version');
 
     const { mutate: setProfileImage, isPending } = useMutation({
         mutationKey: ['profile', session],
@@ -80,8 +78,6 @@ export function CustomAvatar({
             return { url, key };
         },
         onSuccess: async ({ key }) => {
-            setVersion(Date.now().toString());
-
             await fetch(getBaseUrl() + '/api/manage/profile/complete-upload', {
                 method: 'POST',
                 headers: {
@@ -137,7 +133,7 @@ export function CustomAvatar({
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const snapPoints = useMemo(() => ['25%', '25%'], []);
 
-    if (isPending || isLoading || clearPending) {
+    if (isPending || clearPending) {
         return (
             <View className='flex-1 items-center gap-4'>
                 <View className='size-24 items-center justify-center rounded-full bg-primary'>
@@ -179,7 +175,7 @@ export function CustomAvatar({
                     <Avatar alt={`${name}'s Avatar`} className='size-24'>
                         <AvatarImage
                             source={{
-                                uri: `${profileImage}?${version}`,
+                                uri: profileImage,
                                 height: 96,
                                 width: 96,
                             }}
