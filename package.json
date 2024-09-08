@@ -16,8 +16,8 @@
     "dependencies": {
         "@expo/vector-icons": "^14.0.2",
         "@gorhom/bottom-sheet": "^4.6.4",
-        "@react-native-async-storage/async-storage": "^2.0.0",
-        "@react-native-community/netinfo": "^11.3.2",
+        "@react-native-async-storage/async-storage": "1.23.1",
+        "@react-native-community/netinfo": "11.3.1",
         "@react-navigation/native": "^6.0.2",
         "@rn-primitives/avatar": "^1.0.4",
         "@rn-primitives/dialog": "^1.0.3",
@@ -82,7 +82,7 @@
         "prettier-plugin-tailwindcss": "^0.6.6",
         "react-test-renderer": "18.2.0",
         "tailwindcss-animate": "^1.0.7",
-        "typescript": "~5.5.4"
+        "typescript": "5.3.3"
     },
     "private": true,
     "packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1",
