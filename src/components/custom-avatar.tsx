@@ -2,6 +2,7 @@ import { useSession } from '@/src/components/session-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
+import { useNavThemeColors } from '@/src/lib/constants';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -26,6 +27,7 @@ export function CustomAvatar({
     onSuccess: () => void;
 }) {
     const { session } = useSession();
+    const colors = useNavThemeColors();
 
     const { mutate: setProfileImage, isPending } = useMutation({
         mutationKey: ['profile', session],
@@ -197,8 +199,16 @@ export function CustomAvatar({
                 index={1}
                 enablePanDownToClose
                 enableDismissOnClose
-                snapPoints={snapPoints}>
-                <BottomSheetView className='gap-2 px-4'>
+                snapPoints={snapPoints}
+                backgroundStyle={{
+                    backgroundColor: colors.muted,
+                }}
+                handleStyle={{
+                    backgroundColor: colors.text,
+                    borderTopRightRadius: 80,
+                    borderTopLeftRadius: 80,
+                }}>
+                <BottomSheetView className='gap-2 p-4'>
                     <Button onPress={() => setProfileImage()} disabled={isPending || clearPending}>
                         <Text>Choose Image</Text>
                     </Button>
