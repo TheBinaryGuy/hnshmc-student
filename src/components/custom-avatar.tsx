@@ -91,6 +91,8 @@ export function CustomAvatar({
                 }),
             });
 
+            ToastAndroid.show('Image updated', ToastAndroid.SHORT);
+
             onSuccess();
         },
         onError: async error => {
@@ -116,12 +118,14 @@ export function CustomAvatar({
             });
 
             if (!response.ok) {
-                throw new Error('Error clearing image');
+                throw new Error('Error deleting image');
             }
+
+            ToastAndroid.show('Image deleted', ToastAndroid.SHORT);
         },
         onSuccess,
         onError: () => {
-            ToastAndroid.show('Error clearing image', ToastAndroid.SHORT);
+            ToastAndroid.show('Error deleting image', ToastAndroid.SHORT);
         },
     });
 
