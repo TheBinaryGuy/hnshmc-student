@@ -1,14 +1,7 @@
 import { useColorScheme } from '@/src/lib/useColorScheme';
 import type { Theme } from '@react-navigation/native';
 
-export const NAV_THEME: Record<
-    'dark' | 'light',
-    Theme & {
-        colors: {
-            muted: string;
-        };
-    }
-> = {
+export const NAV_THEME: Record<'dark' | 'light', Theme> = {
     light: {
         dark: false,
         colors: {
@@ -18,7 +11,6 @@ export const NAV_THEME: Record<
             notification: 'hsl(220, 66%, 58%)', // hsl destructive
             primary: 'hsl(220, 66%, 58%)', // hsl primary
             text: 'hsl(220, 67%, 0%)', // hsl foreground,
-            muted: 'hsl(220 39% 92%)', // hsl muted
         },
     },
     dark: {
@@ -30,7 +22,6 @@ export const NAV_THEME: Record<
             notification: 'hsl(220, 66%, 58%)', // hsl destructive
             primary: 'hsl(220, 66%, 58%)', // hsl primary
             text: 'hsl(220, 16%, 99%)', // hsl foreground
-            muted: 'hsl(220 39% 8%)', // hsl muted
         },
     },
 };

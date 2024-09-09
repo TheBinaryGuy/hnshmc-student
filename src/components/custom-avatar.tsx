@@ -2,12 +2,13 @@ import { useSession } from '@/src/components/session-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
-import { useNavThemeColors } from '@/src/lib/constants';
+import { useColorScheme } from '@/src/lib/useColorScheme';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useMutation } from '@tanstack/react-query';
 import * as ImagePicker from 'expo-image-picker';
+import { cssInterop } from 'nativewind';
 import { useMemo, useRef } from 'react';
 import { Pressable, ToastAndroid, View } from 'react-native';
 
@@ -16,6 +17,14 @@ async function fetchImageFromUri(uri: string) {
     const blob = await response.blob();
     return blob;
 }
+
+const CustomBottomSheetModal = cssInterop(BottomSheetModal, {
+    className: 'style',
+    backgroundClassName: 'backgroundStyle',
+    handleClassName: 'handleStyle',
+    handleIndicatorClassName: 'handleIndicatorStyle',
+    containerClass: 'containerStyle',
+});
 
 export function CustomAvatar({
     profileImage,
@@ -27,7 +36,7 @@ export function CustomAvatar({
     onSuccess: () => void;
 }) {
     const { session } = useSession();
-    const colors = useNavThemeColors();
+    const { colorScheme } = useColorScheme();
 
     const { mutate: setProfileImage, isPending } = useMutation({
         mutationKey: ['profile', session],
@@ -191,20 +200,15 @@ export function CustomAvatar({
                 variant='link'>
                 <Text>Manage Image</Text>
             </Button>
-            <BottomSheetModal
+            <CustomBottomSheetModal
                 ref={bottomSheetModalRef}
                 index={1}
                 enablePanDownToClose
                 enableDismissOnClose
                 snapPoints={snapPoints}
-                backgroundStyle={{
-                    backgroundColor: colors.muted,
-                }}
-                handleStyle={{
-                    backgroundColor: colors.text,
-                    borderTopRightRadius: 80,
-                    borderTopLeftRadius: 80,
-                }}>
+                backgroundClassName='bg-background dark:bg-accent'
+                handleIndicatorClassName='bg-foreground'
+                backdropComponent={BottomSheetBackdrop}>
                 <BottomSheetView className='gap-2 p-4'>
                     <Button onPress={() => setProfileImage()} disabled={isPending || clearPending}>
                         <Text>Update Image</Text>
@@ -215,8 +219,14 @@ export function CustomAvatar({
                         variant='destructive'>
                         <Text>Delete Image</Text>
                     </Button>
+                    <Button
+                        onPress={() => bottomSheetModalRef.current?.close()}
+                        disabled={isPending || clearPending}
+                        variant='ghost'>
+                        <Text>Close</Text>
+                    </Button>
                 </BottomSheetView>
-            </BottomSheetModal>
+            </CustomBottomSheetModal>
         </View>
     );
 }
