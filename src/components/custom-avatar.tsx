@@ -2,7 +2,6 @@ import { useSession } from '@/src/components/session-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import { Button } from '@/src/components/ui/button';
 import { Text } from '@/src/components/ui/text';
-import { useColorScheme } from '@/src/lib/useColorScheme';
 import { getBaseUrl } from '@/src/lib/utils';
 import { AntDesign } from '@expo/vector-icons';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -36,7 +35,6 @@ export function CustomAvatar({
     onSuccess: () => void;
 }) {
     const { session } = useSession();
-    const { colorScheme } = useColorScheme();
 
     const { mutate: setProfileImage, isPending } = useMutation({
         mutationKey: ['profile', session],
