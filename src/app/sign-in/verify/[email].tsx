@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 const CELL_COUNT = 8;
 
 export default function Verify() {
-    const { signIn } = useSession();
+    const { signInOrRefresh } = useSession();
     const { email } = useLocalSearchParams<{ email: string }>();
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -65,13 +65,12 @@ export default function Verify() {
                 }),
             });
 
-            const session = response.headers.get('sessionid');
-            if (!response.ok || !session) {
+            if (!response.ok) {
                 ToastAndroid.show('Failed to sign in', ToastAndroid.SHORT);
                 return;
             }
 
-            signIn(session);
+            signInOrRefresh(response.headers);
             if (router.canDismiss()) {
                 router.dismissAll();
             }
@@ -81,7 +80,7 @@ export default function Verify() {
         } finally {
             setLoading(false);
         }
-    }, [code, email, signIn]);
+    }, [code, email, signInOrRefresh]);
 
     const colors = useNavThemeColors();
 

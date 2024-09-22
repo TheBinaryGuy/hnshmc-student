@@ -2,15 +2,21 @@ import { useStorageState } from '@/src/hooks/useStorageState';
 import { createContext, useContext, type PropsWithChildren } from 'react';
 
 const AuthContext = createContext<{
-    signIn: (session: string | null) => void;
+    signInOrRefresh: (headers: Headers) => boolean;
+    signInOrRefreshAdmin: (headers: Headers) => boolean;
     signOut: () => void;
+    signOutAdmin: () => void;
     session?: string | null;
+    adminSession?: string | null;
     isLoading: boolean;
+    isAdminLoading: boolean;
 }>({
-    signIn: () => null,
+    signInOrRefresh: () => false,
+    signInOrRefreshAdmin: () => false,
     signOut: () => null,
-    session: null,
+    signOutAdmin: () => null,
     isLoading: false,
+    isAdminLoading: false,
 });
 
 export function useSession() {
@@ -26,18 +32,38 @@ export function useSession() {
 
 export function SessionProvider({ children }: PropsWithChildren) {
     const [[isLoading, session], setSession] = useStorageState('sessionid');
+    const [[isAdminLoading, adminSession], setAdminSession] = useStorageState('admin-sessionid');
 
     return (
         <AuthContext.Provider
             value={{
-                signIn: (session: string | null) => {
-                    setSession(session);
+                signInOrRefresh: (headers: Headers) => {
+                    const session = headers.get('sessionid');
+                    if (session !== null && session !== undefined && session !== '') {
+                        setSession(session);
+                        return true;
+                    }
+                    return false;
+                },
+                signInOrRefreshAdmin: (headers: Headers) => {
+                    const session = headers.get('admin-sessionid');
+                    if (session !== null && session !== undefined && session !== '') {
+                        setAdminSession(session);
+                        return true;
+                    }
+                    return false;
                 },
                 signOut: () => {
                     setSession(null);
                 },
+                signOutAdmin: () => {
+                    setSession(null);
+                    setAdminSession(null);
+                },
                 session,
+                adminSession,
                 isLoading,
+                isAdminLoading,
             }}>
             {children}
         </AuthContext.Provider>

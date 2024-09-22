@@ -10,16 +10,19 @@ import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
-    const { session, isLoading, signOut } = useSession();
+    const { session, adminSession, isAdminLoading, isLoading, signOut, signOutAdmin } =
+        useSession();
     const { bottom } = useSafeAreaInsets();
 
-    if (isLoading) {
+    if (isLoading || isAdminLoading) {
         return <Spinner />;
     }
 
-    if (session === null) {
+    if (session === null && adminSession === null) {
         return <Redirect href='/sign-in' />;
     }
+
+    const showAdminTabs = adminSession !== null && session === null;
 
     return (
         <Tabs
@@ -28,6 +31,26 @@ export default function TabLayout() {
             }}
             screenOptions={{
                 headerRight() {
+                    if (showAdminTabs) {
+                        return (
+                            <Button
+                                variant='ghost'
+                                onPress={() => {
+                                    fetch(getBaseUrl() + '/api/auth/admin-logout', {
+                                        headers: {
+                                            AdminAuthorization: 'Bearer ' + adminSession,
+                                        },
+                                        // eslint-disable-next-line no-console
+                                    }).catch(console.error);
+                                    signOutAdmin();
+                                }}>
+                                <Text>
+                                    <AntDesign size={20} name='logout' />
+                                </Text>
+                            </Button>
+                        );
+                    }
+
                     return (
                         <Button
                             variant='ghost'
@@ -48,13 +71,26 @@ export default function TabLayout() {
                 },
             }}>
             <Tabs.Screen
+                name='students'
+                options={{
+                    title: 'Students',
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+                    ),
+                    href: showAdminTabs ? '/students' : null,
+                }}
+                redirect={!showAdminTabs}
+            />
+            <Tabs.Screen
                 name='index'
                 options={{
                     title: 'Home',
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
                     ),
+                    href: !showAdminTabs ? '/' : null,
                 }}
+                redirect={showAdminTabs}
             />
             <Tabs.Screen
                 name='fees'
@@ -63,7 +99,9 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'cash' : 'cash-outline'} color={color} />
                     ),
+                    href: !showAdminTabs ? '/fees' : null,
                 }}
+                redirect={showAdminTabs}
             />
         </Tabs>
     );

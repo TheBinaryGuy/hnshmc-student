@@ -10,7 +10,7 @@ import { useCallback, useState } from 'react';
 import { ToastAndroid, View } from 'react-native';
 
 export default function SignIn() {
-    const { signIn } = useSession();
+    const { signInOrRefresh, signInOrRefreshAdmin } = useSession();
     const [email, setEmail] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -33,17 +33,13 @@ export default function SignIn() {
             });
 
             if (response.ok) {
-                const session = response.headers.get('sessionid');
-                if (!session) {
-                    ToastAndroid.show('Failed to sign in', ToastAndroid.SHORT);
-                    return;
-                }
+                signInOrRefresh(response.headers);
+                const wasAdminSession = signInOrRefreshAdmin(response.headers);
 
-                signIn(session);
                 if (router.canDismiss()) {
                     router.dismissAll();
                 }
-                return router.replace('/');
+                return wasAdminSession ? router.replace('/students') : router.replace('/');
             }
 
             if (response.status === 404) {
@@ -57,7 +53,7 @@ export default function SignIn() {
         } finally {
             setLoading(false);
         }
-    }, [email, signIn]);
+    }, [email, signInOrRefresh, signInOrRefreshAdmin]);
 
     const colors = useNavThemeColors();
 
@@ -79,7 +75,8 @@ export default function SignIn() {
                             if (loading) return;
                             setEmail(e);
                         }}
-                        aria-labelledby='email'
+                        aria-labelledby='Your Email'
+                        accessibilityLabel='Your Email'
                     />
                     <Button size='sm' disabled={loading} onPress={sendCode}>
                         <Text>{loading ? 'Please Wait' : 'Next'}</Text>

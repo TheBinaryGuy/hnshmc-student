@@ -48,3 +48,8 @@ export type Student = {
     EntryBy: number;
     EntryDate: Date;
 };
+
+export type PaginatedStudents = {
+    students: Pick<Student, 'StudentIDP' | 'FullName' | 'Email'>[];
+    nextCursor: string;
+};

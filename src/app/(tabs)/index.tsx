@@ -18,7 +18,7 @@ const passYearToText = {
 } as Record<number, string>;
 
 export default function Home() {
-    const { session, signIn } = useSession();
+    const { session, signInOrRefresh } = useSession();
 
     const notifyOnChangeProps = useFocusNotifyOnChangeProps();
     const queryFocusAware = useQueryFocusAware(notifyOnChangeProps);
@@ -39,10 +39,7 @@ export default function Home() {
                 throw new Error('Error fetching data');
             }
 
-            const newSession = response.headers.get('sessionid');
-            if (newSession !== null && newSession !== undefined && newSession !== '') {
-                signIn(newSession);
-            }
+            signInOrRefresh(response.headers);
 
             return response.json();
         },

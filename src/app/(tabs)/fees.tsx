@@ -12,7 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ScrollView, View } from 'react-native';
 
 export default function Fees() {
-    const { session, signIn } = useSession();
+    const { session, signInOrRefresh } = useSession();
 
     const notifyOnChangeProps = useFocusNotifyOnChangeProps();
     const queryFocusAware = useQueryFocusAware(notifyOnChangeProps);
@@ -29,10 +29,7 @@ export default function Fees() {
                 throw new Error('Error fetching data');
             }
 
-            const newSession = response.headers.get('sessionid');
-            if (newSession !== null && newSession !== undefined && newSession !== '') {
-                signIn(newSession);
-            }
+            signInOrRefresh(response.headers);
 
             return response.json();
         },
