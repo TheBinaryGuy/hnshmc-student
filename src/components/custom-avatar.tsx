@@ -137,7 +137,7 @@ export function CustomAvatar({
     });
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-    const snapPoints = useMemo(() => ['25%', '25%'], []);
+    const snapPoints = useMemo(() => ['50%', '50%'], []);
 
     if (isPending || clearPending) {
         return (
